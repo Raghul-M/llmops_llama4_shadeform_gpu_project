@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#1a365d" rx="64"/>
+  
+  <!-- Main gear -->
+  <g transform="translate(256, 256)">
+    <!-- Outer gear teeth -->
+    <path d="M-80,0 L-70,-15 L-70,-45 L-45,-70 L-15,-70 L0,-80 L15,-70 L45,-70 L70,-45 L70,-15 L80,0 L70,15 L70,45 L45,70 L15,70 L0,80 L-15,70 L-45,70 L-70,45 L-70,15 Z" 
+          fill="#4fd1c7" 
+          stroke="#2d3748" 
+          stroke-width="3"/>
+    
+    <!-- Inner gear circle -->
+    <circle r="40" fill="#2d3748" stroke="#4fd1c7" stroke-width="3"/>
+    
+    <!-- Center hole -->
+    <circle r="12" fill="#1a365d"/>
+    
+    <!-- Gear spokes -->
+    <g stroke="#4fd1c7" stroke-width="2" fill="none">
+      <line x1="-25" y1="0" x2="25" y2="0"/>
+      <line x1="0" y1="-25" x2="0" y2="25"/>
+      <line x1="-18" y1="-18" x2="18" y2="18"/>
+      <line x1="-18" y1="18" x2="18" y2="-18"/>
+    </g>
+  </g>
+  
+  <!-- Small accent gear -->
+  <g transform="translate(380, 132)">
+    <path d="M-20,0 L-18,-8 L-8,-18 L0,-20 L8,-18 L18,-8 L20,0 L18,8 L8,18 L0,20 L-8,18 L-18,8 Z" 
+          fill="#fbb6ce" 
+          stroke="#2d3748" 
+          stroke-width="2"/>
+    <circle r="8" fill="#2d3748"/>
+  </g>
+  
+  <!-- Terminal/Code accent -->
+  <g transform="translate(132, 380)" fill="#68d391" stroke="#2d3748" stroke-width="2">
+    <rect x="-15" y="-10" width="30" height="20" rx="3" fill="#2d3748"/>
+    <text x="-8" y="3" fill="#68d391" font-family="monospace" font-size="8">&gt;_</text>
+  </g>
+  
+  <!-- Cloud accent -->
+  <g transform="translate(380, 380)" fill="#90cdf4" stroke="#2d3748" stroke-width="2">
+    <ellipse cx="-5" cy="0" rx="12" ry="6"/>
+    <ellipse cx="5" cy="0" rx="8" ry="5"/>
+    <ellipse cx="0" cy="-3" rx="6" ry="4"/>
+  </g>
+</svg> 
