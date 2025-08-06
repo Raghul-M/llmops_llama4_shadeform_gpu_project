@@ -61,37 +61,18 @@ def get_models():
 def get_model_response(model_name: str, question: str):
     try:
         llm = ChatOllama(model=model_name, base_url=OLLAMA_BASE_URL)
-        doc_path = "./data/DevOpsknowledgebase.pdf"
-        data = load_pdf(doc_path)
-        chunks = split_pdf(data)
-        vector_db = create_vector_db(chunks)
         
-        retriever = MultiQueryRetriever.from_llm(
-            vector_db.as_retriever(), llm
-        )
-        
-        # Create a proper prompt template
+        # Create a simple prompt template for direct question answering
         prompt = ChatPromptTemplate.from_template("""
-        Based on the following context, please answer the question:
-        
-        Context: {context}
+        You are a helpful AI assistant. Please answer the following question:
         
         Question: {question}
         
         Answer:
         """)
         
-        # Function to format retrieved documents
-        def format_docs(docs):
-            return "\n\n".join(doc.page_content for doc in docs)
-        
-        # Create the proper chain
-        chain = (
-            {"context": retriever | format_docs, "question": RunnablePassthrough()}
-            | prompt
-            | llm
-            | StrOutputParser()
-        )
+        # Create a simple chain without RAG for now
+        chain = prompt | llm | StrOutputParser()
         
         response = chain.invoke(question)
         return {"answer": response}
