@@ -15,7 +15,7 @@ services:
 
   # Backend service - FastAPI with Ollama integration
   backend:
-    image: raghulm/llmops-backend:latest
+    image: raghulm/llmops-backend:v2
     container_name: llmops-backend
     ports:
       - "8000:8000"
