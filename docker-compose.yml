@@ -51,6 +51,8 @@ services:
         echo '📦 Pulling gemma3:12b...' &&
         curl -X POST http://ollama:11434/api/pull -d '{\"name\":\"gemma3:12b\"}' &&
         echo '✅ All models downloaded successfully!' &&
+        curl -X POST http://ollama:11434/api/pull -d '{\"name\":\"nomic-embed-text:latest\"}' &&
+        echo '✅ All models downloaded successfully!' &&
         echo '📋 Available models:' &&
         curl http://ollama:11434/api/tags
       "
