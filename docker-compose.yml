@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # Ollama service - AI model server
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - llmops-network
+    restart: unless-stopped
+
+  # Backend service - FastAPI with Ollama integration
+  backend:
+    image: raghulm/llmops-backend:latest
+    container_name: llmops-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - ollama
+    networks:
+      - llmops-network
+    restart: unless-stopped
+
+  # Model setup service - pulls models after Ollama is ready
+  model-setup:
+    image: alpine:latest
+    container_name: model-setup
+    depends_on:
+      - ollama
+    networks:
+      - llmops-network
+    restart: "no"
+    command: >
+      sh -c "
+        apk add --no-cache curl &&
+        echo '🚀 Setting up AI models...' &&
+        echo '⏳ Waiting for Ollama to be ready...' &&
+        sleep 30 &&
+        echo '📦 Pulling gpt-oss:20b...' &&
+        curl -X POST http://ollama:11434/api/pull -d '{\"name\":\"gpt-oss:20b\"}' &&
+        echo '📦 Pulling deepseek-r1:14b...' &&
+        curl -X POST http://ollama:11434/api/pull -d '{\"name\":\"deepseek-r1:14b\"}' &&
+        echo '📦 Pulling gemma3:12b...' &&
+        curl -X POST http://ollama:11434/api/pull -d '{\"name\":\"gemma3:12b\"}' &&
+        echo '✅ All models downloaded successfully!' &&
+        echo '📋 Available models:' &&
+        curl http://ollama:11434/api/tags
+      "
+
+networks:
+  llmops-network:
+    driver: bridge
+
+volumes:
+  ollama_data:
+    driver: local 

@@ -19,12 +19,12 @@ RUN npm run build
 # Install a simple static file server
 RUN npm install -g serve
 
-# Expose port
-EXPOSE 3000
+# Expose port 8080 (matches vite.config.ts)
+EXPOSE 8080
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/ || exit 1
 
-# Serve the built files
-CMD ["serve", "-s", "dist", "-l", "3000"]
+# Serve the built files on port 8080
+CMD ["serve", "-s", "dist", "-l", "8080"]

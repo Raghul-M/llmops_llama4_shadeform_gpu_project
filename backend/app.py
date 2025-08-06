@@ -2,7 +2,7 @@ from fastapi import FastAPI
 import requests
 import os
 from langchain_ollama import OllamaLLM
-from langchain_community.document_loaders import UnstructuredPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_ollama import ChatOllama
@@ -19,7 +19,7 @@ OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 OLLAMA_API_URL = f"{OLLAMA_BASE_URL}/api"
 
 def load_pdf(pdf_path: str):
-    loader = UnstructuredPDFLoader(file_path=pdf_path)
+    loader = PyPDFLoader(file_path=pdf_path)
     data = loader.load()
     print("done loading....")
     return data
