@@ -15,7 +15,7 @@ services:
 
   # Backend service - FastAPI with Ollama integration
   backend:
-    image: raghulm/llmops-backend:v2
+    image: raghulm/llmops-backend:latest
     container_name: llmops-backend
     ports:
       - "8000:8000"
@@ -50,8 +50,6 @@ services:
         curl -X POST http://ollama:11434/api/pull -d '{\"name\":\"deepseek-r1:14b\"}' &&
         echo '📦 Pulling gemma3:12b...' &&
         curl -X POST http://ollama:11434/api/pull -d '{\"name\":\"gemma3:12b\"}' &&
-        echo '✅ All models downloaded successfully!' &&
-        curl -X POST http://ollama:11434/api/pull -d '{\"name\":\"nomic-embed-text:latest\"}' &&
         echo '✅ All models downloaded successfully!' &&
         echo '📋 Available models:' &&
         curl http://ollama:11434/api/tags
